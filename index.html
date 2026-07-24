@@ -498,6 +498,67 @@ renderPics();
 window.addEventListener('load', () => {
   startSplashCamera();
 });
+ /* ─────────────────────────────────────────────────
+   email-fix.js
+   Fixes photo emails not arriving.
+
+   Root cause: EmailJS's FREE plan has a size limit
+   per template variable (roughly 50KB). A selfie
+   photo straight from the camera is usually much
+   bigger than that as base64 text, so the send call
+   was failing silently in the background.
+
+   This file:
+   1. Shrinks the photo (smaller width + more JPEG
+      compression) ONLY for the copy that gets
+      emailed — your saved gallery photo stays
+      full quality.
+   2. Prints the exact EmailJS error to the browser
+      console (F12) if a send still fails, so you can
+      see the real reason instead of a generic message.
+───────────────────────────────────────────────── */
+
+function resizeImageForEmail(sourceDataUrl, maxWidth, quality, callback) {
+  const img = new Image();
+  img.onload = function () {
+    const scale = Math.min(1, maxWidth / img.width);
+    const w = Math.round(img.width * scale);
+    const h = Math.round(img.height * scale);
+    const c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    c.getContext('2d').drawImage(img, 0, 0, w, h);
+    callback(c.toDataURL('image/jpeg', quality));
+  };
+  img.src = sourceDataUrl;
+}
+
+// This OVERRIDES the sendPhotoToEmail function from the main file,
+// because this script loads after it.
+function sendPhotoToEmail(dataUrl) {
+  if (!emailReady) {
+    showToast('⚠️ Email not set up — check your EmailJS keys');
+    console.warn('EmailJS not initialized. Double-check EMAILJS_PUBLIC_KEY / EMAILJS_SERVICE_ID / EMAILJS_TEMPLATE_ID in the main HTML file.');
+    return;
+  }
+
+  showToast('💾 Saving photo…');
+
+  resizeImageForEmail(dataUrl, 500, 0.5, function (smallDataUrl) {
+    console.log('Email image size (KB):', Math.round(smallDataUrl.length / 1024));
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      image: smallDataUrl,
+      time: new Date().toLocaleString(),
+      to_email: TO_EMAIL
+    }).then(() => {
+      showToast('✅ Photo saved!');
+    }).catch((err) => {
+      console.error('EmailJS FULL ERROR:', err);
+      showToast('❌ Send failed — press F12 and check the console');
+    });
+  });
+}
 </script>
 </body>
 </html>
