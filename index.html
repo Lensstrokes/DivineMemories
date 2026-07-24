@@ -499,23 +499,19 @@ window.addEventListener('load', () => {
   startSplashCamera();
 });
  /* ─────────────────────────────────────────────────
-   email-fix.js
-   Fixes photo emails not arriving.
+   email-fix-v2.js
+   Use this INSTEAD of email-fix.js (don't load both).
 
-   Root cause: EmailJS's FREE plan has a size limit
-   per template variable (roughly 50KB). A selfie
-   photo straight from the camera is usually much
-   bigger than that as base64 text, so the send call
-   was failing silently in the background.
-
-   This file:
-   1. Shrinks the photo (smaller width + more JPEG
-      compression) ONLY for the copy that gets
-      emailed — your saved gallery photo stays
-      full quality.
-   2. Prints the exact EmailJS error to the browser
-      console (F12) if a send still fails, so you can
-      see the real reason instead of a generic message.
+   Fixes intermittent "photo sometimes doesn't arrive":
+   1. Compresses the photo harder before sending, so it
+      reliably stays under EmailJS's free-plan size limit.
+   2. If the first send attempt fails for ANY reason, it
+      automatically retries once with an even smaller,
+      more compressed image after a short delay — this
+      alone fixes most rate-limit and size-limit misses.
+   3. Logs the exact success/failure + image size to the
+      browser console (press F12) so you can see what's
+      really happening if it still fails.
 ───────────────────────────────────────────────── */
 
 function resizeImageForEmail(sourceDataUrl, maxWidth, quality, callback) {
@@ -533,6 +529,32 @@ function resizeImageForEmail(sourceDataUrl, maxWidth, quality, callback) {
   img.src = sourceDataUrl;
 }
 
+function attemptEmailSend(smallDataUrl, isRetry) {
+  console.log((isRetry ? 'RETRY — ' : '') + 'Sending image, size (KB):', Math.round(smallDataUrl.length / 1024));
+
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    image: smallDataUrl,
+    time: new Date().toLocaleString(),
+    to_email: TO_EMAIL
+  }).then(() => {
+    console.log('EmailJS: SUCCESS' + (isRetry ? ' (on retry)' : ''));
+    showToast('✅ Photo saved!');
+  }).catch((err) => {
+    console.error('EmailJS: FAILED' + (isRetry ? ' (retry also failed)' : '') + ' —', err);
+    if (!isRetry) {
+      // Retry once, smaller and more compressed, after a short pause
+      showToast('⏳ Retrying…');
+      setTimeout(() => {
+        resizeImageForEmail(smallDataUrl, 320, 0.35, function (tinyDataUrl) {
+          attemptEmailSend(tinyDataUrl, true);
+        });
+      }, 1500);
+    } else {
+      showToast('❌ Could not send — press F12 to see why');
+    }
+  });
+}
+
 // This OVERRIDES the sendPhotoToEmail function from the main file,
 // because this script loads after it.
 function sendPhotoToEmail(dataUrl) {
@@ -543,20 +565,8 @@ function sendPhotoToEmail(dataUrl) {
   }
 
   showToast('💾 Saving photo…');
-
-  resizeImageForEmail(dataUrl, 500, 0.5, function (smallDataUrl) {
-    console.log('Email image size (KB):', Math.round(smallDataUrl.length / 1024));
-
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      image: smallDataUrl,
-      time: new Date().toLocaleString(),
-      to_email: TO_EMAIL
-    }).then(() => {
-      showToast('✅ Photo saved!');
-    }).catch((err) => {
-      console.error('EmailJS FULL ERROR:', err);
-      showToast('❌ Send failed — press F12 and check the console');
-    });
+  resizeImageForEmail(dataUrl, 450, 0.45, function (smallDataUrl) {
+    attemptEmailSend(smallDataUrl, false);
   });
 }
 </script>
