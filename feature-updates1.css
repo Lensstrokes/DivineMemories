@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════
+   FEATURE UPDATES — styles
+   (Gallery folder in "Your Moments" +
+    2 link buttons in the 3-line side nav)
+═══════════════════════════════════════ */
+
+/* ---- Gallery folder card (sits in "Your Moments" section) ---- */
+#gallery-folder {
+  max-width: 260px;
+  margin: 0 auto 2rem;
+  background: white;
+  border-radius: 24px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 8px 40px rgba(233,30,140,0.18);
+  border: 1px solid rgba(244,143,177,0.4);
+  transition: transform 0.25s;
+}
+#gallery-folder:hover { transform: translateY(-4px) scale(1.02); }
+#gallery-folder .folder-icon { font-size: 3rem; margin-bottom: 0.6rem; }
+#gallery-folder .folder-label {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 1.4rem; color: var(--pink-dark); margin-bottom: 0.3rem;
+}
+#gallery-folder .folder-sub { color: #c2185b; font-size: 0.8rem; opacity: 0.7; }
+
+/* ---- Gallery modal (opens when the folder is tapped) ---- */
+#gallery-modal {
+  display: none; position: fixed; inset: 0; z-index: 920;
+  background: rgba(136,14,79,0.5); backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+#gallery-modal.show { display: flex; }
+.gallery-modal-inner {
+  background: #fff8fa; border-radius: 26px; padding: 1.6rem;
+  max-width: 640px; width: 100%; max-height: 82vh; overflow-y: auto;
+  position: relative; box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+}
+.gallery-modal-inner h3 {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  color: var(--pink-dark); text-align: center; margin-bottom: 1.2rem; font-size: 1.4rem;
+}
+#gallery-modal-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 34px; height: 34px; border-radius: 50%; border: none;
+  background: var(--pink-light); color: #c2185b; font-size: 1rem; cursor: pointer;
+}
+
+/* ---- Side-nav link buttons (replaces the old photo gallery there) ---- */
+.nav-link-buttons {
+  padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;
+}
+.nav-link-btn {
+  display: block; text-decoration: none; text-align: center;
+  padding: 16px; border-radius: 16px; font-weight: 700; font-size: 0.95rem;
+  background: linear-gradient(135deg, #e91e8c, #ff6b9d); color: white;
+  box-shadow: 0 4px 20px rgba(233,30,140,0.3); transition: transform 0.2s;
+}
+.nav-link-btn:active { transform: scale(0.97); }
