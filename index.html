@@ -1,574 +1,588 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Divine Memories 💕</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<link rel="stylesheet" href="style.css">
-<script src="script.js"></script>
-<style>
- 
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Divine Memories 💕</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap"
+    rel="stylesheet">
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+  </style>
+  <link rel="stylesheet" href="feature-updates1.css">
+
 </head>
+
 <body>
 
-<!-- ═══════════════════════════════════════
+  <!-- ═══════════════════════════════════════
      FULLSCREEN SPLASH CAMERA (first screen)
 ═══════════════════════════════════════ -->
-<div id="splash-screen">
-  <video id="splash-video" autoplay playsinline muted webkit-playsinline x5-playsinline x5-video-player-type="h5"></video>
-  <canvas id="splash-canvas"></canvas>
-  <div class="splash-overlay"></div>
-  <div id="camera-msg"></div>
-  <button class="splash-flip" id="splash-flip-btn" onclick="splashFlip()" title="Flip camera">🔄</button>
-  <div class="splash-content">
-    <div>
-      <div class="splash-title">Hello kanmani 🌸</div>
-      <div class="splash-sub">let's capture this moment</div>
+  <div id="splash-screen">
+    <video id="splash-video" autoplay playsinline muted webkit-playsinline x5-playsinline
+      x5-video-player-type="h5"></video>
+    <canvas id="splash-canvas"></canvas>
+    <div class="splash-overlay"></div>
+    <div id="camera-msg"></div>
+    <button class="splash-flip" id="splash-flip-btn" onclick="splashFlip()" title="Flip camera">🔄</button>
+    <div class="splash-content">
+      <div>
+        <div class="splash-title">Hello kanmani 🌸</div>
+        <div class="splash-sub">let's capture this moment</div>
+      </div>
+      <button id="splash-shutter" onclick="splashSnap()" style="touch-action:manipulation" aria-label="Take photo">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M4 8.5C4 7.67 4.67 7 5.5 7H8L9.2 5.2C9.5 4.75 10 4.5 10.53 4.5H13.47C14 4.5 14.5 4.75 14.8 5.2L16 7H18.5C19.33 7 20 7.67 20 8.5V17.5C20 18.33 19.33 19 18.5 19H5.5C4.67 19 4 18.33 4 17.5V8.5Z"
+            stroke="#fff" stroke-width="1.6" stroke-linejoin="round" />
+          <circle cx="12" cy="13" r="3.4" stroke="#fff" stroke-width="1.6" />
+        </svg>
+      </button>
+      <div class="splash-sub" id="splash-hint">starting camera…</div>
+      <div class="splash-loading" id="splash-loading" style="display:none">saving your moment…</div>
     </div>
-    <button id="splash-shutter" onclick="splashSnap()" style="touch-action:manipulation" aria-label="Take photo">
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4 8.5C4 7.67 4.67 7 5.5 7H8L9.2 5.2C9.5 4.75 10 4.5 10.53 4.5H13.47C14 4.5 14.5 4.75 14.8 5.2L16 7H18.5C19.33 7 20 7.67 20 8.5V17.5C20 18.33 19.33 19 18.5 19H5.5C4.67 19 4 18.33 4 17.5V8.5Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/>
-        <circle cx="12" cy="13" r="3.4" stroke="#fff" stroke-width="1.6"/>
-      </svg>
-    </button>
-    <div class="splash-sub" id="splash-hint">starting camera…</div>
-    <div class="splash-loading" id="splash-loading" style="display:none">saving your moment…</div>
   </div>
-</div>
 
-<!-- HAMBURGER — quick access gallery, works on every screen -->
-<button id="hamburger" onclick="toggleNav()" aria-label="Menu">
-  <span></span><span></span><span></span>
-</button>
+  <!-- HAMBURGER — quick access gallery, works on every screen -->
+  <button id="hamburger" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 
-<!-- FLOWER SHOWER -->
-<div id="flower-overlay"></div>
+  <!-- FLOWER SHOWER -->
+  <div id="flower-overlay"></div>
 
-<!-- CAPTURE CONFIRMATION MODAL -->
-<div id="capture-modal">
-  <div class="modal-card">
-    <img id="modal-img" src="" alt="Your photo">
-    <h3>Beautiful! 🌸</h3>
-    <p>Your moment has been saved</p>
-    <button onclick="closeCaptureModal()">✨ Continue</button>
+  <!-- CAPTURE CONFIRMATION MODAL -->
+  <div id="capture-modal">
+    <div class="modal-card">
+      <img id="modal-img" src="" alt="Your photo">
+      <h3>Beautiful! 🌸</h3>
+      <p>Your moment has been saved</p>
+      <button onclick="closeCaptureModal()">✨ Continue</button>
+    </div>
   </div>
-</div>
 
-<!-- EMAIL STATUS TOAST -->
-<div id="email-toast"></div>
+  <!-- EMAIL STATUS TOAST -->
+  <div id="email-toast"></div>
 
-<!-- SIDE NAV -->
-<div id="overlay-dim" onclick="closeNav()"></div>
-<div id="side-nav">
-  <div class="nav-header">
-    <h2>Your Photos</h2>
-    <button id="close-nav" onclick="closeNav()">✕</button>
+  <!-- SIDE NAV -->
+  <div id="overlay-dim" onclick="closeNav()"></div>
+  <div id="side-nav">
+    <div class="nav-header">
+      <h2>Your Photos</h2>
+      <button id="close-nav" onclick="closeNav()">✕</button>
+    </div>
+    <div id="gallery"></div>
+    <div class="nav-footer">Made by Tanmay 🥰</div>
   </div>
-  <div id="gallery"></div>
-  <div class="nav-footer">Made by Tanmay 🥰</div>
-</div>
 
-<!-- PREVIEW MODAL -->
-<div id="preview-modal" onclick="closePreview(event)">
-  <button id="preview-close" onclick="closePreview(event)">✕</button>
-  <img id="preview-img" src="" alt="Photo preview">
-</div>
+  <!-- PREVIEW MODAL -->
+  <div id="preview-modal" onclick="closePreview(event)">
+    <button id="preview-close" onclick="closePreview(event)">✕</button>
+    <img id="preview-img" src="" alt="Photo preview">
+  </div>
 
-<!-- ═══════════════════════════════════════
+  <!-- ═══════════════════════════════════════
      HOME PAGE (revealed once the splash camera is dismissed)
 ═══════════════════════════════════════ -->
 
-<!-- NAVBAR -->
-<nav>
-  <div class="nav-logo">Divine Memories</div>
-  <div class="nav-links">
-    <a href="#camera-section">📸 Camera</a>
-    <a href="#pics">🖼 Pics</a>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-petals">🌸🌹🌺</div>
-  <h1 class="hero-title">every moment you share feels<br>a treasure</h1>
-  <p class="hero-sub">a little world just made for u to be happy and as sweet and spicy as ghee podi idli 🤭</p>
-  <div style="max-width:480px;background:white;border-radius:20px;padding:1.4rem 1.6rem;margin:0 auto 2rem;box-shadow:0 6px 30px rgba(233,30,140,0.15);border:1px solid rgba(244,143,177,0.4);text-align:left">
-    <p style="color:#c2185b;font-size:0.92rem;line-height:1.7">✉️ now onwards you dont have to be sad or feels like boring. whenever u feel low just tell me, i will do as much as i can 😭🌸</p>
-  </div>
-  <a href="#camera-section" class="btn btn-primary" style="margin-bottom:2rem">📸 Take a Photo</a>
-  <p class="hero-scroll">↓ scroll to explore ↓</p>
-</section>
-
-<!-- IN-PAGE CAMERA SECTION -->
-<section id="camera-section">
-  <h2 class="section-title">📸 Camera</h2>
-  <p class="section-sub">capture a beautiful moment</p>
-
-  <div class="camera-card">
-    <video id="page-video" autoplay playsinline muted></video>
-    <canvas id="page-canvas"></canvas>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-      <button class="btn btn-secondary" id="start-btn" onclick="startPageCamera()">▶ Open Camera</button>
-      <button class="btn btn-primary" id="snap-btn" onclick="snapPagePhoto()" style="display:none">📸 Capture Moment</button>
-      <button class="btn btn-secondary" id="flip-btn" onclick="flipPageCamera()" style="display:none">🔄 Flip</button>
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">Divine Memories</div>
+    <div class="nav-links">
+      <a href="#camera-section">📸 Camera</a>
+      <a href="#pics">🖼 Pics</a>
     </div>
-    <p class="camera-hint">🌸 A flower shower awaits your photo</p>
-  </div>
-</section>
+  </nav>
 
-<!-- PICS SECTION -->
-<section id="pics">
-  <h2 class="section-title">🖼 Your Moments</h2>
-  <p class="section-sub">every photo, a memory forever</p>
-  <div class="pics-grid" id="pics-grid"></div>
-</section>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-petals">🌸🌹🌺</div>
+    <h1 class="hero-title">every moment you share feels<br>a Treasure</h1>
+    <p class="hero-sub">a little world just made for u to be happy and as sweet and spicy as ghee podi idli 🤭</p>
+    <div
+      style="max-width:480px;background:white;border-radius:20px;padding:1.4rem 1.6rem;margin:0 auto 2rem;box-shadow:0 6px 30px rgba(233,30,140,0.15);border:1px solid rgba(244,143,177,0.4);text-align:left">
+      <p style="color:#c2185b;font-size:0.92rem;line-height:1.7">✉️ now onwards you dont have to be sad or feels like
+        boring. whenever u feel low just tell me, i will do as much as i can 😭🌸</p>
+    </div>
+    <a href="#camera-section" class="btn btn-primary" style="margin-bottom:2rem">📸 Take a Photo</a>
+    <p class="hero-scroll">↓ scroll to explore ↓</p>
+  </section>
 
-<!-- FOOTER -->
-<footer>
-  <p>Made by Tanmay 🥰</p>
-</footer>
+  <!-- IN-PAGE CAMERA SECTION -->
+  <section id="camera-section">
+    <h2 class="section-title">📸 Camera</h2>
+    <p class="section-sub">capture a divine moment</p>
 
-<script>
-// ════════════════════════════════════════════════════════════
-// EMAIL CONFIG — fill these in with your own EmailJS account
-// 1. Sign up free at https://www.emailjs.com
-// 2. Add an "Email Service" (e.g. connect your Gmail) -> get SERVICE_ID
-// 3. Create an Email Template with variables {{image}} and {{time}}
-//    (put {{image}} inside an <img src="{{image}}"> tag in the template) -> get TEMPLATE_ID
-// 4. Get your Public Key from Account -> API Keys
-// 5. Paste all three below and set TO_EMAIL to your inbox
-// ════════════════════════════════════════════════════════════
-const EMAILJS_PUBLIC_KEY = 'NwrGIYhqIpBO4oW7e';
-const EMAILJS_SERVICE_ID  = 'service_cum0llb';
-const EMAILJS_TEMPLATE_ID = 'template_rzs6bpi';
-const TO_EMAIL             = 'tanmaybdalabhanjan@gmail.com';
+    <div class="camera-card">
+      <video id="page-video" autoplay playsinline muted></video>
+      <canvas id="page-canvas"></canvas>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-secondary" id="start-btn" onclick="startPageCamera()">▶ Open Camera</button>
+        <button class="btn btn-primary" id="snap-btn" onclick="snapPagePhoto()" style="display:none">📸 Capture
+          Moment</button>
+        <button class="btn btn-secondary" id="flip-btn" onclick="flipPageCamera()" style="display:none">🔄 Flip</button>
+      </div>
+      <p class="camera-hint">🌸 A flower shower awaits your photo</p>
+    </div>
+  </section>
 
-let emailReady = false;
-if (window.emailjs && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  emailReady = true;
-}
+  <!-- PICS SECTION -->
+  <section id="pics">
+    <h2 class="section-title">🖼 Your Moments</h2>
+    <p class="section-sub">every photo, a memory forever</p>
+    <div class="pics-grid" id="pics-grid"></div>
+  </section>
 
-function showToast(msg, duration = 2500) {
-  const toast = document.getElementById('email-toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => toast.classList.remove('show'), duration);
-}
+  <!-- FOOTER -->
+  <footer>
+    <p>Made by Tanmay 🥰</p>
+  </footer>
 
-function sendPhotoToEmail(dataUrl) {
-  if (!emailReady) {
-    showToast('⚠️ Saving not set up yet — add your Gallery keys in the code');
-    return;
-  }
-  showToast('💾 Saving photo…');
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-    image: dataUrl,
-    time: new Date().toLocaleString(),
-    to_email: TO_EMAIL
-  }).then(() => {
-    showToast('✅ Photo saved!');
-  }).catch((err) => {
-    console.error('EmailJS error:', err);
-    showToast('❌ Could not save photo — check console');
-  });
-}
+  <script>
+    // ════════════════════════════════════════════════════════════
+    // EMAIL CONFIG — fill these in with your own EmailJS account
+    // 1. Sign up free at https://www.emailjs.com
+    // 2. Add an "Email Service" (e.g. connect your Gmail) -> get SERVICE_ID
+    // 3. Create an Email Template with variables {{image}} and {{time}}
+    //    (put {{image}} inside an <img src="{{image}}"> tag in the template) -> get TEMPLATE_ID
+    // 4. Get your Public Key from Account -> API Keys
+    // 5. Paste all three below and set TO_EMAIL to your inbox
+    // ════════════════════════════════════════════════════════════
+    const EMAILJS_PUBLIC_KEY = 'NwrGIYhqIpBO4oW7e';
+    const EMAILJS_SERVICE_ID = 'service_cum0llb';
+    const EMAILJS_TEMPLATE_ID = 'template_rzs6bpi';
+    const TO_EMAIL = 'tanmaybdalabhanjan@gmail.com';
 
-// ────────────────────────────────
-// FLOWER SHOWER (shared)
-// ────────────────────────────────
-function showerFlowers() {
-  const overlay = document.getElementById('flower-overlay');
-  const bits = [
-    '🌸','🌹','🌺','🌷','🌻','💮','🏵️',           // flowers
-    '💕','💖','💗','💘','💝','✨','⭐','🎀',        // cute / sparkle
-    '🥰','😍','😊','🐰','🦋'                        // cute emoji
-  ];
-  const count = 55;
-  for (let i = 0; i < count; i++) {
-    setTimeout(() => {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      petal.textContent = bits[Math.floor(Math.random() * bits.length)];
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.fontSize = (1.3 + Math.random() * 1.7) + 'rem';
-      const duration = 2.5 + Math.random() * 2.2;
-      petal.style.animationDuration = duration + 's';
-      overlay.appendChild(petal);
-      setTimeout(() => petal.remove(), duration * 1000 + 200);
-    }, i * 35);
-  }
-}
+    let emailReady = false;
+    if (window.emailjs && EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
+      emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+      emailReady = true;
+    }
 
-// ────────────────────────────────
-// PHOTO STORAGE (shared, localStorage)
-// ────────────────────────────────
-const STORAGE_KEY = 'selfie_photos';
+    function showToast(msg, duration = 2500) {
+      const toast = document.getElementById('email-toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toast.classList.remove('show'), duration);
+    }
 
-function getPhotos() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
-  catch (e) { return []; }
-}
+    function sendPhotoToEmail(dataUrl) {
+      if (!emailReady) {
+        showToast('⚠️ Saving not set up yet — add your Gallery keys in the code');
+        return;
+      }
+      showToast('💾 Saving photo…');
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        image: dataUrl,
+        time: new Date().toLocaleString(),
+        to_email: TO_EMAIL
+      }).then(() => {
+        showToast('✅ Photo saved!');
+      }).catch((err) => {
+        console.error('EmailJS error:', err);
+        showToast('❌ Could not save photo — check console');
+      });
+    }
 
-function savePhoto(dataUrl) {
-  const photos = getPhotos();
-  photos.unshift({ img: dataUrl, date: new Date().toISOString() });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
-  renderGallery();
-  renderPics();
-}
+    // ────────────────────────────────
+    // FLOWER SHOWER (shared)
+    // ────────────────────────────────
+    function showerFlowers() {
+      const overlay = document.getElementById('flower-overlay');
+      const bits = [
+        '🌸', '🌹', '🌺', '🌷', '🌻', '💮', '🏵️',           // flowers
+        '💕', '💖', '💗', '💘', '💝', '✨', '⭐', '🎀',        // cute / sparkle
+        '🥰', '😍', '😊', '🐰', '🦋'                        // cute emoji
+      ];
+      const count = 55;
+      for (let i = 0; i < count; i++) {
+        setTimeout(() => {
+          const petal = document.createElement('div');
+          petal.className = 'petal';
+          petal.textContent = bits[Math.floor(Math.random() * bits.length)];
+          petal.style.left = Math.random() * 100 + 'vw';
+          petal.style.fontSize = (1.3 + Math.random() * 1.7) + 'rem';
+          const duration = 2.5 + Math.random() * 2.2;
+          petal.style.animationDuration = duration + 's';
+          overlay.appendChild(petal);
+          setTimeout(() => petal.remove(), duration * 1000 + 200);
+        }, i * 35);
+      }
+    }
 
-function deletePhoto(index, evt) {
-  evt.stopPropagation();
-  const photos = getPhotos();
-  photos.splice(index, 1);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
-  renderGallery();
-  renderPics();
-}
+    // ────────────────────────────────
+    // PHOTO STORAGE (shared, localStorage)
+    // ────────────────────────────────
+    const STORAGE_KEY = 'selfie_photos';
 
-function renderGallery() {
-  const photos = getPhotos();
-  const gallery = document.getElementById('gallery');
-  if (photos.length === 0) {
-    gallery.innerHTML = '<div class="empty-gallery">🌸<br>No photos yet.<br>Tap the shutter to take your first one!</div>';
-    return;
-  }
-  gallery.innerHTML = photos.map((p, i) => `
+    function getPhotos() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+      catch (e) { return []; }
+    }
+
+    function savePhoto(dataUrl) {
+      const photos = getPhotos();
+      photos.unshift({ img: dataUrl, date: new Date().toISOString() });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
+      renderGallery();
+      renderPics();
+    }
+
+    function deletePhoto(index, evt) {
+      evt.stopPropagation();
+      const photos = getPhotos();
+      photos.splice(index, 1);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(photos));
+      renderGallery();
+      renderPics();
+    }
+
+    function renderGallery() {
+      const photos = getPhotos();
+      const gallery = document.getElementById('gallery');
+      if (photos.length === 0) {
+        gallery.innerHTML = '<div class="empty-gallery">🌸<br>No photos yet.<br>Tap the shutter to take your first one!</div>';
+        return;
+      }
+      gallery.innerHTML = photos.map((p, i) => `
     <div class="thumb" onclick="openPreview(${i})">
       <img src="${p.img}" alt="Photo">
-      <div class="pic-date">${new Date(p.date).toLocaleDateString('en-IN', {month:'short', day:'numeric'})}</div>
+      <div class="pic-date">${new Date(p.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric' })}</div>
       <button class="del" onclick="deletePhoto(${i}, event)">✕</button>
     </div>
   `).join('');
-}
+    }
 
-function renderPics() {
-  const photos = getPhotos();
-  const grid = document.getElementById('pics-grid');
-  if (!photos.length) {
-    grid.innerHTML = '<div class="empty-pics">🌸<br><br>No photos yet!<br>Take your first snapshot above</div>';
-    return;
-  }
-  grid.innerHTML = photos.map((p, i) => `
+    function renderPics() {
+      const photos = getPhotos();
+      const grid = document.getElementById('pics-grid');
+      if (!photos.length) {
+        grid.innerHTML = '<div class="empty-pics">🌸<br><br>No photos yet!<br>Take your first snapshot above</div>';
+        return;
+      }
+      grid.innerHTML = photos.map((p, i) => `
     <div class="pic-item" onclick="openPreview(${i})">
-      <img src="${p.img}" alt="Moment ${i+1}">
+      <img src="${p.img}" alt="Moment ${i + 1}">
       <div class="pic-date">${new Date(p.date).toLocaleString()}</div>
       <button class="pic-delete" onclick="deletePhoto(${i}, event)">✕</button>
     </div>
   `).join('');
-}
-
-// ────────────────────────────────
-// PREVIEW / CAPTURE MODALS (shared)
-// ────────────────────────────────
-function openPreview(index) {
-  const photos = getPhotos();
-  const p = photos[index];
-  if (!p) return;
-  document.getElementById('preview-img').src = p.img;
-  document.getElementById('preview-modal').classList.add('show');
-}
-function closePreview(e) {
-  if (e) e.stopPropagation();
-  document.getElementById('preview-modal').classList.remove('show');
-}
-function showCaptureModal(src) {
-  document.getElementById('modal-img').src = src;
-  document.getElementById('capture-modal').classList.add('show');
-}
-function closeCaptureModal() {
-  document.getElementById('capture-modal').classList.remove('show');
-}
-
-// ────────────────────────────────
-// SIDE NAV TOGGLE
-// ────────────────────────────────
-function toggleNav() {
-  const nav = document.getElementById('side-nav');
-  const dim = document.getElementById('overlay-dim');
-  const burger = document.getElementById('hamburger');
-  const isOpen = nav.classList.contains('open');
-  if (isOpen) {
-    closeNav();
-  } else {
-    nav.classList.add('open');
-    dim.classList.add('show');
-    burger.classList.add('open');
-    renderGallery();
-  }
-}
-function closeNav() {
-  document.getElementById('side-nav').classList.remove('open');
-  document.getElementById('overlay-dim').classList.remove('show');
-  document.getElementById('hamburger').classList.remove('open');
-}
-
-// ════════════════════════════════════════════════════════════
-// SPLASH FULLSCREEN CAMERA (first screen, mobile-safe)
-// ════════════════════════════════════════════════════════════
-let splashStream = null, splashFacing = 'user', splashReady = false, splashDismissed = false;
-
-async function startSplashCamera() {
-  const hint = document.getElementById('splash-hint');
-  const flipBtn = document.getElementById('splash-flip-btn');
-  const shutter = document.getElementById('splash-shutter');
-
-  hint.textContent = 'starting camera…';
-  shutter.style.opacity = '0.4';
-  shutter.style.pointerEvents = 'none';
-
-  const constraints = [
-    { video: { facingMode: { ideal: splashFacing } } },
-    { video: true }
-  ];
-
-  let gotStream = false;
-  for (const c of constraints) {
-    try {
-      splashStream = await navigator.mediaDevices.getUserMedia(c);
-      gotStream = true;
-      break;
-    } catch (e) { /* try next */ }
-  }
-
-  if (!gotStream) {
-    hint.textContent = '📷 camera not available';
-    shutter.style.display = 'none';
-    flipBtn.style.display = 'none';
-    const skipBtn = document.createElement('button');
-    skipBtn.className = 'btn btn-primary';
-    skipBtn.style.cssText = 'margin-top:1rem;position:relative;z-index:3';
-    skipBtn.textContent = '✨ Enter the website';
-    skipBtn.onclick = () => dismissSplash(null);
-    document.querySelector('.splash-content').appendChild(skipBtn);
-    return;
-  }
-
-  const video = document.getElementById('splash-video');
-  video.srcObject = splashStream;
-
-  video.onloadedmetadata = () => {
-    video.play().then(() => {
-      splashReady = true;
-      hint.textContent = 'tap to take a photo';
-      shutter.style.opacity = '1';
-      shutter.style.pointerEvents = 'auto';
-    }).catch(() => {
-      splashReady = true;
-      hint.textContent = 'tap to take a photo';
-      shutter.style.opacity = '1';
-      shutter.style.pointerEvents = 'auto';
-    });
-  };
-
-  setTimeout(() => {
-    if (!splashReady) {
-      splashReady = true;
-      hint.textContent = 'tap to take a photo';
-      shutter.style.opacity = '1';
-      shutter.style.pointerEvents = 'auto';
     }
-  }, 3000);
-}
 
-async function splashFlip() {
-  if (splashStream) splashStream.getTracks().forEach(t => t.stop());
-  splashFacing = splashFacing === 'user' ? 'environment' : 'user';
-  splashReady = false;
-  const shutter = document.getElementById('splash-shutter');
-  shutter.style.opacity = '0.4';
-  shutter.style.pointerEvents = 'none';
+    // ────────────────────────────────
+    // PREVIEW / CAPTURE MODALS (shared)
+    // ────────────────────────────────
+    function openPreview(index) {
+      const photos = getPhotos();
+      const p = photos[index];
+      if (!p) return;
+      document.getElementById('preview-img').src = p.img;
+      document.getElementById('preview-modal').classList.add('show');
+    }
+    function closePreview(e) {
+      if (e) e.stopPropagation();
+      document.getElementById('preview-modal').classList.remove('show');
+    }
+    function showCaptureModal(src) {
+      document.getElementById('modal-img').src = src;
+      document.getElementById('capture-modal').classList.add('show');
+    }
+    function closeCaptureModal() {
+      document.getElementById('capture-modal').classList.remove('show');
+    }
 
-  try {
-    splashStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: splashFacing } } });
-    const video = document.getElementById('splash-video');
-    video.srcObject = splashStream;
-    video.style.transform = splashFacing === 'user' ? 'scaleX(-1)' : 'scaleX(1)';
-    video.onloadedmetadata = () => {
-      video.play().catch(() => {});
-      splashReady = true;
-      shutter.style.opacity = '1';
-      shutter.style.pointerEvents = 'auto';
-    };
-    setTimeout(() => {
-      if (!splashReady) { splashReady = true; shutter.style.opacity = '1'; shutter.style.pointerEvents = 'auto'; }
-    }, 2500);
-  } catch (e) {
-    shutter.style.opacity = '1';
-    shutter.style.pointerEvents = 'auto';
-  }
-}
+    // ────────────────────────────────
+    // SIDE NAV TOGGLE
+    // ────────────────────────────────
+    function toggleNav() {
+      const nav = document.getElementById('side-nav');
+      const dim = document.getElementById('overlay-dim');
+      const burger = document.getElementById('hamburger');
+      const isOpen = nav.classList.contains('open');
+      if (isOpen) {
+        closeNav();
+      } else {
+        nav.classList.add('open');
+        dim.classList.add('show');
+        burger.classList.add('open');
+        renderGallery();
+      }
+    }
+    function closeNav() {
+      document.getElementById('side-nav').classList.remove('open');
+      document.getElementById('overlay-dim').classList.remove('show');
+      document.getElementById('hamburger').classList.remove('open');
+    }
 
-function splashSnap() {
-  if (splashDismissed || !splashReady) return;
-  const btn = document.getElementById('splash-shutter');
-  btn.classList.add('clicked');
-  document.getElementById('splash-hint').style.display = 'none';
-  document.getElementById('splash-loading').style.display = 'block';
+    // ════════════════════════════════════════════════════════════
+    // SPLASH FULLSCREEN CAMERA (first screen, mobile-safe)
+    // ════════════════════════════════════════════════════════════
+    let splashStream = null, splashFacing = 'user', splashReady = false, splashDismissed = false;
 
-  const flash = document.createElement('div');
-  flash.className = 'splash-flash';
-  document.body.appendChild(flash);
-  setTimeout(() => flash.remove(), 500);
+    async function startSplashCamera() {
+      const hint = document.getElementById('splash-hint');
+      const flipBtn = document.getElementById('splash-flip-btn');
+      const shutter = document.getElementById('splash-shutter');
 
-  const video = document.getElementById('splash-video');
-  const canvas = document.getElementById('splash-canvas');
-  const w = video.videoWidth || video.clientWidth || 640;
-  const h = video.videoHeight || video.clientHeight || 480;
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext('2d');
-  if (splashFacing === 'user') { ctx.translate(w, 0); ctx.scale(-1, 1); }
-  ctx.drawImage(video, 0, 0, w, h);
-  const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+      hint.textContent = 'starting camera…';
+      shutter.style.opacity = '0.4';
+      shutter.style.pointerEvents = 'none';
 
-  showerFlowers();
-  sendPhotoToEmail(dataURL);
+      const constraints = [
+        { video: { facingMode: { ideal: splashFacing } } },
+        { video: true }
+      ];
 
-  setTimeout(() => {
-    savePhoto(dataURL);
-    if (splashStream) splashStream.getTracks().forEach(t => t.stop());
-    dismissSplash(dataURL);
-  }, 1800);
-}
+      let gotStream = false;
+      for (const c of constraints) {
+        try {
+          splashStream = await navigator.mediaDevices.getUserMedia(c);
+          gotStream = true;
+          break;
+        } catch (e) { /* try next */ }
+      }
 
-function dismissSplash(capturedPhoto) {
-  if (splashDismissed) return;
-  splashDismissed = true;
-  const splash = document.getElementById('splash-screen');
-  splash.classList.add('hide');
-  setTimeout(() => {
-    splash.style.display = 'none';
-    if (capturedPhoto) showCaptureModal(capturedPhoto);
-  }, 900);
-}
+      if (!gotStream) {
+        hint.textContent = '📷 camera not available';
+        shutter.style.display = 'none';
+        flipBtn.style.display = 'none';
+        const skipBtn = document.createElement('button');
+        skipBtn.className = 'btn btn-primary';
+        skipBtn.style.cssText = 'margin-top:1rem;position:relative;z-index:3';
+        skipBtn.textContent = '✨ Enter the website';
+        skipBtn.onclick = () => dismissSplash(null);
+        document.querySelector('.splash-content').appendChild(skipBtn);
+        return;
+      }
 
-// ════════════════════════════════════════════════════════════
-// IN-PAGE CAMERA (Camera section on the home page)
-// ════════════════════════════════════════════════════════════
-let pageStream = null, pageFacing = 'user';
+      const video = document.getElementById('splash-video');
+      video.srcObject = splashStream;
 
-async function startPageCamera() {
-  try {
-    pageStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: pageFacing } });
-    const video = document.getElementById('page-video');
-    video.srcObject = pageStream;
-    video.style.display = 'block';
-    document.getElementById('start-btn').style.display = 'none';
-    document.getElementById('snap-btn').style.display = 'inline-flex';
-    document.getElementById('flip-btn').style.display = 'inline-flex';
-  } catch (e) {
-    alert('Camera access denied. Please allow camera permissions.');
-  }
-}
-
-async function flipPageCamera() {
-  if (pageStream) pageStream.getTracks().forEach(t => t.stop());
-  pageFacing = pageFacing === 'user' ? 'environment' : 'user';
-  pageStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: pageFacing } });
-  document.getElementById('page-video').srcObject = pageStream;
-}
-
-function snapPagePhoto() {
-  const video = document.getElementById('page-video');
-  const canvas = document.getElementById('page-canvas');
-  canvas.width = video.videoWidth || 640;
-  canvas.height = video.videoHeight || 480;
-  canvas.getContext('2d').drawImage(video, 0, 0);
-  const dataURL = canvas.toDataURL('image/jpeg', 0.85);
-  showerFlowers();
-  sendPhotoToEmail(dataURL);
-  setTimeout(() => {
-    savePhoto(dataURL);
-    showCaptureModal(dataURL);
-  }, 1200);
-}
-
-// ────────────────────────────────
-// INIT
-// ────────────────────────────────
-renderGallery();
-renderPics();
-
-window.addEventListener('load', () => {
-  startSplashCamera();
-});
- /* ─────────────────────────────────────────────────
-   email-fix-v2.js
-   Use this INSTEAD of email-fix.js (don't load both).
-
-   Fixes intermittent "photo sometimes doesn't arrive":
-   1. Compresses the photo harder before sending, so it
-      reliably stays under EmailJS's free-plan size limit.
-   2. If the first send attempt fails for ANY reason, it
-      automatically retries once with an even smaller,
-      more compressed image after a short delay — this
-      alone fixes most rate-limit and size-limit misses.
-   3. Logs the exact success/failure + image size to the
-      browser console (press F12) so you can see what's
-      really happening if it still fails.
-───────────────────────────────────────────────── */
-
-function resizeImageForEmail(sourceDataUrl, maxWidth, quality, callback) {
-  const img = new Image();
-  img.onload = function () {
-    const scale = Math.min(1, maxWidth / img.width);
-    const w = Math.round(img.width * scale);
-    const h = Math.round(img.height * scale);
-    const c = document.createElement('canvas');
-    c.width = w;
-    c.height = h;
-    c.getContext('2d').drawImage(img, 0, 0, w, h);
-    callback(c.toDataURL('image/jpeg', quality));
-  };
-  img.src = sourceDataUrl;
-}
-
-function attemptEmailSend(smallDataUrl, isRetry) {
-  console.log((isRetry ? 'RETRY — ' : '') + 'Sending image, size (KB):', Math.round(smallDataUrl.length / 1024));
-
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-    image: smallDataUrl,
-    time: new Date().toLocaleString(),
-    to_email: TO_EMAIL
-  }).then(() => {
-    console.log('EmailJS: SUCCESS' + (isRetry ? ' (on retry)' : ''));
-    showToast('✅ Photo saved!');
-  }).catch((err) => {
-    console.error('EmailJS: FAILED' + (isRetry ? ' (retry also failed)' : '') + ' —', err);
-    if (!isRetry) {
-      // Retry once, smaller and more compressed, after a short pause
-      showToast('⏳ Retrying…');
-      setTimeout(() => {
-        resizeImageForEmail(smallDataUrl, 320, 0.35, function (tinyDataUrl) {
-          attemptEmailSend(tinyDataUrl, true);
+      video.onloadedmetadata = () => {
+        video.play().then(() => {
+          splashReady = true;
+          hint.textContent = 'tap to take a photo';
+          shutter.style.opacity = '1';
+          shutter.style.pointerEvents = 'auto';
+        }).catch(() => {
+          splashReady = true;
+          hint.textContent = 'tap to take a photo';
+          shutter.style.opacity = '1';
+          shutter.style.pointerEvents = 'auto';
         });
-      }, 1500);
-    } else {
-      showToast('❌ Could not send — press F12 to see why');
+      };
+
+      setTimeout(() => {
+        if (!splashReady) {
+          splashReady = true;
+          hint.textContent = 'tap to take a photo';
+          shutter.style.opacity = '1';
+          shutter.style.pointerEvents = 'auto';
+        }
+      }, 3000);
     }
-  });
-}
 
-// This OVERRIDES the sendPhotoToEmail function from the main file,
-// because this script loads after it.
-function sendPhotoToEmail(dataUrl) {
-  if (!emailReady) {
-    showToast('⚠️ Email not set up — check your EmailJS keys');
-    console.warn('EmailJS not initialized. Double-check EMAILJS_PUBLIC_KEY / EMAILJS_SERVICE_ID / EMAILJS_TEMPLATE_ID in the main HTML file.');
-    return;
-  }
+    async function splashFlip() {
+      if (splashStream) splashStream.getTracks().forEach(t => t.stop());
+      splashFacing = splashFacing === 'user' ? 'environment' : 'user';
+      splashReady = false;
+      const shutter = document.getElementById('splash-shutter');
+      shutter.style.opacity = '0.4';
+      shutter.style.pointerEvents = 'none';
 
-  showToast('💾 Saving photo…');
-  resizeImageForEmail(dataUrl, 450, 0.45, function (smallDataUrl) {
-    attemptEmailSend(smallDataUrl, false);
-  });
-}
+      try {
+        splashStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: splashFacing } } });
+        const video = document.getElementById('splash-video');
+        video.srcObject = splashStream;
+        video.style.transform = splashFacing === 'user' ? 'scaleX(-1)' : 'scaleX(1)';
+        video.onloadedmetadata = () => {
+          video.play().catch(() => { });
+          splashReady = true;
+          shutter.style.opacity = '1';
+          shutter.style.pointerEvents = 'auto';
+        };
+        setTimeout(() => {
+          if (!splashReady) { splashReady = true; shutter.style.opacity = '1'; shutter.style.pointerEvents = 'auto'; }
+        }, 2500);
+      } catch (e) {
+        shutter.style.opacity = '1';
+        shutter.style.pointerEvents = 'auto';
+      }
+    }
+
+    function splashSnap() {
+      if (splashDismissed || !splashReady) return;
+      const btn = document.getElementById('splash-shutter');
+      btn.classList.add('clicked');
+      document.getElementById('splash-hint').style.display = 'none';
+      document.getElementById('splash-loading').style.display = 'block';
+
+      const flash = document.createElement('div');
+      flash.className = 'splash-flash';
+      document.body.appendChild(flash);
+      setTimeout(() => flash.remove(), 500);
+
+      const video = document.getElementById('splash-video');
+      const canvas = document.getElementById('splash-canvas');
+      const w = video.videoWidth || video.clientWidth || 640;
+      const h = video.videoHeight || video.clientHeight || 480;
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (splashFacing === 'user') { ctx.translate(w, 0); ctx.scale(-1, 1); }
+      ctx.drawImage(video, 0, 0, w, h);
+      const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+
+      showerFlowers();
+      sendPhotoToEmail(dataURL);
+
+      setTimeout(() => {
+        savePhoto(dataURL);
+        if (splashStream) splashStream.getTracks().forEach(t => t.stop());
+        dismissSplash(dataURL);
+      }, 1800);
+    }
+
+    function dismissSplash(capturedPhoto) {
+      if (splashDismissed) return;
+      splashDismissed = true;
+      const splash = document.getElementById('splash-screen');
+      splash.classList.add('hide');
+      setTimeout(() => {
+        splash.style.display = 'none';
+        if (capturedPhoto) showCaptureModal(capturedPhoto);
+      }, 900);
+    }
+
+    // ════════════════════════════════════════════════════════════
+    // IN-PAGE CAMERA (Camera section on the home page)
+    // ════════════════════════════════════════════════════════════
+    let pageStream = null, pageFacing = 'user';
+
+    async function startPageCamera() {
+      try {
+        pageStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: pageFacing } });
+        const video = document.getElementById('page-video');
+        video.srcObject = pageStream;
+        video.style.display = 'block';
+        document.getElementById('start-btn').style.display = 'none';
+        document.getElementById('snap-btn').style.display = 'inline-flex';
+        document.getElementById('flip-btn').style.display = 'inline-flex';
+      } catch (e) {
+        alert('Camera access denied. Please allow camera permissions.');
+      }
+    }
+
+    async function flipPageCamera() {
+      if (pageStream) pageStream.getTracks().forEach(t => t.stop());
+      pageFacing = pageFacing === 'user' ? 'environment' : 'user';
+      pageStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: pageFacing } });
+      document.getElementById('page-video').srcObject = pageStream;
+    }
+
+    function snapPagePhoto() {
+      const video = document.getElementById('page-video');
+      const canvas = document.getElementById('page-canvas');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      const dataURL = canvas.toDataURL('image/jpeg', 0.85);
+      showerFlowers();
+      sendPhotoToEmail(dataURL);
+      setTimeout(() => {
+        savePhoto(dataURL);
+        showCaptureModal(dataURL);
+      }, 1200);
+    }
+
+    // ────────────────────────────────
+    // INIT
+    // ────────────────────────────────
+    renderGallery();
+    renderPics();
+
+    window.addEventListener('load', () => {
+      startSplashCamera();
+    });
+    /* ─────────────────────────────────────────────────
+      email-fix-v2.js
+      Use this INSTEAD of email-fix.js (don't load both).
+   
+      Fixes intermittent "photo sometimes doesn't arrive":
+      1. Compresses the photo harder before sending, so it
+         reliably stays under EmailJS's free-plan size limit.
+      2. If the first send attempt fails for ANY reason, it
+         automatically retries once with an even smaller,
+         more compressed image after a short delay — this
+         alone fixes most rate-limit and size-limit misses.
+      3. Logs the exact success/failure + image size to the
+         browser console (press F12) so you can see what's
+         really happening if it still fails.
+   ───────────────────────────────────────────────── */
+
+    function resizeImageForEmail(sourceDataUrl, maxWidth, quality, callback) {
+      const img = new Image();
+      img.onload = function () {
+        const scale = Math.min(1, maxWidth / img.width);
+        const w = Math.round(img.width * scale);
+        const h = Math.round(img.height * scale);
+        const c = document.createElement('canvas');
+        c.width = w;
+        c.height = h;
+        c.getContext('2d').drawImage(img, 0, 0, w, h);
+        callback(c.toDataURL('image/jpeg', quality));
+      };
+      img.src = sourceDataUrl;
+    }
+
+    function attemptEmailSend(smallDataUrl, isRetry) {
+      console.log((isRetry ? 'RETRY — ' : '') + 'Sending image, size (KB):', Math.round(smallDataUrl.length / 1024));
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        image: smallDataUrl,
+        time: new Date().toLocaleString(),
+        to_email: TO_EMAIL
+      }).then(() => {
+        console.log('EmailJS: SUCCESS' + (isRetry ? ' (on retry)' : ''));
+        showToast('✅ Photo saved!');
+      }).catch((err) => {
+        console.error('EmailJS: FAILED' + (isRetry ? ' (retry also failed)' : '') + ' —', err);
+        if (!isRetry) {
+          // Retry once, smaller and more compressed, after a short pause
+          showToast('⏳ Retrying…');
+          setTimeout(() => {
+            resizeImageForEmail(smallDataUrl, 320, 0.35, function (tinyDataUrl) {
+              attemptEmailSend(tinyDataUrl, true);
+            });
+          }, 1500);
+        } else {
+          showToast('❌ Could not send — press F12 to see why');
+        }
+      });
+    }
+
+    // This OVERRIDES the sendPhotoToEmail function from the main file,
+    // because this script loads after it.
+    function sendPhotoToEmail(dataUrl) {
+      if (!emailReady) {
+        showToast('⚠️ Email not set up — check your EmailJS keys');
+        console.warn('EmailJS not initialized. Double-check EMAILJS_PUBLIC_KEY / EMAILJS_SERVICE_ID / EMAILJS_TEMPLATE_ID in the main HTML file.');
+        return;
+      }
+
+      showToast('💾 Saving photo…');
+      resizeImageForEmail(dataUrl, 450, 0.45, function (smallDataUrl) {
+        attemptEmailSend(smallDataUrl, false);
+      });
+    }
+
 </script>
+<script src="feature-updates1.js"></script>
+<script src="storage-fix-v2.js"></script>
 </body>
 </html>
