@@ -347,18 +347,12 @@
         } catch (e) { /* try next */ }
       }
 
-      if (!gotStream) {
-        hint.textContent = '📷 camera not available';
-        shutter.style.display = 'none';
-        flipBtn.style.display = 'none';
-        const skipBtn = document.createElement('button');
-        skipBtn.className = 'btn btn-primary';
-        skipBtn.style.cssText = 'margin-top:1rem;position:relative;z-index:3';
-        skipBtn.textContent = '✨ Enter the website';
-        skipBtn.onclick = () => dismissSplash(null);
-        document.querySelector('.splash-content').appendChild(skipBtn);
-        return;
-      }
+     if (!gotStream) {
+    hint.textContent = '📷 camera access is required to continue';
+    shutter.style.display = 'none';
+    flipBtn.style.display = 'none';
+    return;
+}
 
       const video = document.getElementById('splash-video');
       video.srcObject = splashStream;
