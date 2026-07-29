@@ -9,7 +9,7 @@
    "file" = path to that event's own separate file
 ═══════════════════════════════════════ */
 const SPECIAL_EVENTS = [
-    { date: '07-30', file: 'events/event-friendshipday2.js' },
+    { date: '07-30', file: 'events/event-friendshipday1.js' },
   
 
   // 👉 add more like this, one line each:
