@@ -208,7 +208,7 @@
       <div class="friendship-photo-card">
         <button id="friendship-photo-close">✕</button>
         <img src="events/friendship-photo2.jpg" alt="Friends">
-        <div class="friendship-photo-caption">Yeeee 🥹 But Only friends nothing else 🙂</div>
+        <div class="friendship-photo-caption">Yeeee I am no more Stranger to u From today 🥹 But Only friends nothing else🫰🫵🙂</div>
       </div>
     `;
     document.body.appendChild(overlay);
