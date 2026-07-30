@@ -168,7 +168,7 @@
     modal.id = 'friendship-question-overlay';
     modal.innerHTML = `
       <div class="friendship-letter-card">
-        <img class="friendship-q-pic" src="events/friendship-photo1.jpg" alt="">
+        <img class="friendship-q-pic" src="friendship-photo1.jpg" alt="">
         <div class="friendship-q">U said I am stranger to U Huhh 😟🥺Can we be friends from today ?? 🌸</div>
         <div class="friendship-btns">
           <button id="friend-yes">Yes 🥰</button>
@@ -207,7 +207,7 @@
     overlay.innerHTML = `
       <div class="friendship-photo-card">
         <button id="friendship-photo-close">✕</button>
-        <img src="events/friendship-photo2.jpg" alt="Friends">
+        <img src="friendship-photo2.jpg" alt="Friends">
         <div class="friendship-photo-caption">Yeeee I am no more Stranger now 🥹,But Only friends nothing else🫰🫵🙂</div>
       </div>
     `;
