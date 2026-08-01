@@ -1,0 +1,92 @@
+/* ═══════════════════════════════════════
+   LETTER FEATURE — styles
+   A rose-themed letter template that opens
+   beside the "Take a Photo" button, where
+   you can write and save anything.
+═══════════════════════════════════════ */
+
+/* Wrapper that holds both buttons side by side */
+.hero-btn-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+/* The "Open Letter" button (matches your existing btn-secondary style) */
+.btn-letter {
+  background: white;
+  color: #c2185b;
+  border: 2px solid var(--pink-mid);
+}
+.btn-letter:hover { background: var(--pink-light); }
+
+/* ---- Letter modal overlay ---- */
+#letter-modal {
+  display: none; position: fixed; inset: 0; z-index: 930;
+  background: rgba(136,14,79,0.45); backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+#letter-modal.show { display: flex; }
+
+/* ---- The letter paper itself ---- */
+.letter-paper {
+  position: relative;
+  background: #fffdf7;
+  background-image:
+    linear-gradient(rgba(244,143,177,0.12) 1px, transparent 1px);
+  background-size: 100% 2.1rem;
+  max-width: 480px; width: 100%; max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 10px;
+  padding: 2.2rem 2rem 2rem;
+  box-shadow: 0 20px 70px rgba(0,0,0,0.35), 0 0 0 1px rgba(244,143,177,0.3);
+  animation: letterOpen 0.45s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes letterOpen {
+  from { transform: scale(0.85) rotate(-2deg); opacity: 0; }
+  to   { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.letter-paper::before {
+  content: '💌';
+  position: absolute; top: -22px; left: 50%; transform: translateX(-50%);
+  font-size: 2.4rem; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+}
+.letter-heading {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 1.5rem; color: var(--pink-dark);
+  text-align: center; margin-bottom: 1.2rem;
+}
+#letter-text {
+  width: 100%; min-height: 260px;
+  border: none; background: transparent; resize: vertical;
+  font-family: 'Playfair Display', serif; font-size: 1.05rem;
+  line-height: 2.1rem; color: #6b1039;
+  outline: none;
+}
+#letter-text::placeholder { color: rgba(107,16,57,0.4); font-style: italic; }
+
+.letter-actions {
+  display: flex; justify-content: center; gap: 12px;
+  margin-top: 1.2rem; flex-wrap: wrap;
+}
+.letter-actions button {
+  padding: 10px 26px; border: none; border-radius: 50px;
+  font-family: 'Lato', sans-serif; font-weight: 700; font-size: 0.9rem;
+  cursor: pointer; letter-spacing: 0.03em; transition: transform 0.2s;
+}
+.letter-actions button:active { transform: scale(0.96); }
+#letter-save {
+  background: linear-gradient(135deg, #e91e8c, #ff6b9d); color: white;
+  box-shadow: 0 4px 20px rgba(233,30,140,0.35);
+}
+#letter-close {
+  background: var(--pink-light); color: #c2185b;
+}
+#letter-saved-note {
+  text-align: center; font-size: 0.8rem; color: #e91e8c;
+  opacity: 0; margin-top: 0.6rem; transition: opacity 0.3s;
+}
+#letter-saved-note.show { opacity: 0.85; }

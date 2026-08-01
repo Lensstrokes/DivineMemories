@@ -1,0 +1,24 @@
+/* ═══════════════════════════════════════
+   UI TWEAKS — styles
+   1. Hides the 3-line menu while the splash
+      camera is showing (only appears once
+      you're on the home page).
+   2. Moves the splash camera's shutter
+      button further down the screen for
+      easier one-thumb reach on phones.
+═══════════════════════════════════════ */
+
+/* Hidden by default — a matching JS file reveals it once the home page is shown */
+#hamburger {
+  display: none;
+}
+#hamburger.home-visible {
+  display: flex;
+}
+
+/* Push the splash camera's shutter button down.
+   Increase this value to move it even lower,
+   decrease it to bring it back up. */
+#splash-shutter {
+  margin-top: 60vh;
+}
